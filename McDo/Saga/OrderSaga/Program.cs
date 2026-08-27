@@ -14,7 +14,7 @@ var config = new ConfigurationBuilder()
 var rabbitMqConnectionString = config.GetConnectionString("RabbitMq")
 	?? throw new InvalidOperationException(
 		"Missing connection string 'RabbitMq'. Set it with: " +
-		"dotnet user-secrets set \"ConnectionStrings:RabbitMq\" \"rabbitmq://guest:guest@localhost/macdo\"");
+		"dotnet user-secrets set \"ConnectionStrings:RabbitMq\" \"rabbitmq://<user>:<password>@<host>/<virtual_host>\"");
 
 var sagaDbConnectionString = config.GetConnectionString("OrderSagaDb")
 	?? throw new InvalidOperationException(
