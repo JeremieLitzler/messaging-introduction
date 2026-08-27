@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Customer/Customer.csproj" />
+  <Project Path="OrderSaga/OrderSaga.csproj" />
+  <Project Path="Restaurant.Messages/Restaurant.Messages.csproj" />
+  <Project Path="Restaurant/Restaurant.csproj" />
+</Solution>
