@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Rebus.Activation;
 using Rebus.Config;
+using Rebus.Persistence.FileSystem;
 using Rebus.Persistence.InMem;
 using Rebus.Routing.TypeBased;
 using Restaurant.Messages;
@@ -27,11 +28,12 @@ activator.Register((bus, _) => new OrderSaga.OrderSaga(bus));
 var bus = Configure.With(activator)
 	.Transport(t => t.UseRabbitMq(rabbitMqConnectionString, "orders-saga"))
 	.Routing(r => r.TypeBased().Map<PrepareMealCommand>("restaurant"))
-	.Sagas(s => s.StoreInPostgres(
-		sagaDbConnectionString,
-		"order-saga",
-		"order-saga-index")
-	)
+	//.Sagas(s => s.StoreInPostgres(
+	//	sagaDbConnectionString,
+	//	"order-saga",
+	//	"order-saga-index")
+	//)
+	.Sagas(s => s.UseFilesystem("D:\\Git\\GitHub\\messaging-introduction\\McDo\\Saga\\OrderSaga\\.saga-db"))
 	//.Sagas(s => s.StoreInMemory())
 	.Start();
 

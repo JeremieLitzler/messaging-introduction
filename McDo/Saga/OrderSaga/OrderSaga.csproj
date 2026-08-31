@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Restaurant.Messages\Restaurant.Messages.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="file-persistence\" />
+  </ItemGroup>
+
 </Project>

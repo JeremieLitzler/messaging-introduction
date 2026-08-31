@@ -8,7 +8,7 @@ namespace OrderSaga
 	internal class OrderSaga :
 		Saga<OrderSagaData>,
 		IAmInitiatedBy<PlaceOrderCommand>,
-		IHandleMessages<MealReadyEvent>
+		IHandleMessages<MealReadyEvent>		
 	{
 		private IBus _bus;
 
@@ -27,7 +27,7 @@ namespace OrderSaga
 		{
 			Console.WriteLine($"Order {message.OrderId}. Let's prepare it...");
 
-			Data.Meals = message
+			Data.BatchesToPrepare = message
 				.Items
 				.ToDictionary(item => item.Name, item => item.Quantity);
 			foreach (var command in message
@@ -47,7 +47,11 @@ namespace OrderSaga
 		public Task Handle(MealReadyEvent message)
 		{
 			// Set the meal as ready
-			Data.Meals[message.MealName]--;
+			Data.BatchesToPrepare[message.MealName]--;
+			if (Data.BatchesToPrepare[message.MealName] == 0)
+			{
+				Data.BatchesToPrepare.Remove(message.MealName);
+			}
 			// Check if order is complete
 			if (Data.IsOrderComplete)
 			{
@@ -55,7 +59,7 @@ namespace OrderSaga
 				return Task.CompletedTask;
 			}
 			// Otherwise, continue waiting...
-			Console.WriteLine($"Order still has {Data.MealsToComplete} meals to prepare...");
+			Console.WriteLine($"Order still has {Data.BatchesToPrepare.Count(m => m.Value > 0)} meals to prepare...");
 			return Task.CompletedTask;
 		}
 	}
@@ -64,10 +68,9 @@ namespace OrderSaga
 	{
 		public string OrderId { get; set; }
 		// State is a dico tracking the meals readyness
-		public Dictionary<string, int> Meals { get; set; } = new Dictionary<string, int>();
+		public Dictionary<string, int> BatchesToPrepare { get; set; } = new Dictionary<string, int>();
 
 		// Order is complete when all meals are ready
-		public bool IsOrderComplete => Meals.Values.All(count => count == 0);
-		public int MealsToComplete => Meals.Count(m => m.Value > 0);
+		public bool IsOrderComplete => BatchesToPrepare.Count == 0;
 	}
 }
