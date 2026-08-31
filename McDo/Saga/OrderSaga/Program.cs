@@ -27,7 +27,9 @@ activator.Register((bus, _) => new OrderSaga.OrderSaga(bus));
 
 var bus = Configure.With(activator)
 	.Transport(t => t.UseRabbitMq(rabbitMqConnectionString, "orders-saga"))
-	.Routing(r => r.TypeBased().Map<PrepareMealCommand>("restaurant"))
+	.Routing(r => r.TypeBased()
+		.Map<PrepareMealCommand>("restaurant")
+		.Map<DistributeOrderCommand>("restaurant"))
 	//.Sagas(s => s.StoreInPostgres(
 	//	sagaDbConnectionString,
 	//	"order-saga",

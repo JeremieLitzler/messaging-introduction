@@ -56,6 +56,7 @@ namespace OrderSaga
 			if (Data.IsOrderComplete)
 			{
 				Console.WriteLine($"Order {message.OrderId} is complete!");
+				_bus.Send(new DistributeOrderCommand(message.OrderId));
 				return Task.CompletedTask;
 			}
 			// Otherwise, continue waiting...

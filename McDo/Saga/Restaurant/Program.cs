@@ -1,7 +1,9 @@
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Rebus.Activation;
 using Rebus.Config;
+using Rebus.Routing.TypeBased;
+using Restaurant.Messages;
+using System.Reflection;
 
 var config = new ConfigurationBuilder()
 	.AddUserSecrets(Assembly.GetExecutingAssembly(), optional: true)
@@ -16,9 +18,11 @@ var rabbitMqConnectionString = config.GetConnectionString("RabbitMq")
 using var activator = new BuiltinHandlerActivator();
 
 activator.Register((bus, _) => new Restaurant.Handlers.PrepareMealCommandHandler(bus));
+activator.Register((bus, _) => new Restaurant.Handlers.DistributeOrderCommandHandler(bus));
 
 var bus = Configure.With(activator)
 	.Transport(t => t.UseRabbitMq(rabbitMqConnectionString, "restaurant"))
+	.Routing(r => r.TypeBased().Map<OrderReadyCommand>("customer"))
 	.Start();
 
 Console.WriteLine("Press enter to quit");

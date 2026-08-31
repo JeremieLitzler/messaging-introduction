@@ -16,10 +16,11 @@ var rabbitMqConnectionString = config.GetConnectionString("RabbitMq")
 		"dotnet user-secrets set \"ConnectionStrings:RabbitMq\" \"rabbitmq://guest:guest@localhost/macdo\"");
 
 using var activator = new BuiltinHandlerActivator();
+activator.Register((bus, _) => new Customer.Handlers.OrderReadyCommandHandler(bus));
 
 var bus = Configure.With(activator)
-	.Transport(t => t.UseRabbitMqAsOneWayClient(rabbitMqConnectionString))
-	.Routing(r => r.TypeBased().Map<Restaurant.Messages.PlaceOrderCommand>("orders-saga"))
+	.Transport(t => t.UseRabbitMq(rabbitMqConnectionString, "customer"))
+	.Routing(r => r.TypeBased().Map<PlaceOrderCommand>("orders-saga"))
 	.Start();
 
 string command = string.Empty;
