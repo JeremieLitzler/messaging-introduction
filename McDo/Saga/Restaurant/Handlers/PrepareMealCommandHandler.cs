@@ -24,6 +24,7 @@ namespace Restaurant.Handlers
 
 			await Task.Delay(random.Next(1000, 5000));
 			Console.WriteLine($"Prepared {message.MealName}");
+
 			await _bus.Publish(new MealReadyEvent
 			{
 				OrderId = message.OrderId,

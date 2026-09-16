@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="Customer/Customer.csproj" />
+  <Project Path="OrderSaga.Tests/OrderSaga.Tests.csproj" Id="fc7fce99-97a1-4337-ba5e-72056ac7eae8" />
   <Project Path="OrderSaga/OrderSaga.csproj" />
   <Project Path="Restaurant.Messages/Restaurant.Messages.csproj" />
   <Project Path="Restaurant/Restaurant.csproj" />

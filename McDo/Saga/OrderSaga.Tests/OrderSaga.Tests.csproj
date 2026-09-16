@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="35.6.5" />
+    <PackageReference Include="NSubstitute" Version="6.2.0" />
+    <PackageReference Include="Rebus" Version="8.9.3" />
+    <PackageReference Include="TUnit" Version="1.68.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrderSaga\OrderSaga.csproj" />
+    <ProjectReference Include="..\Restaurant.Messages\Restaurant.Messages.csproj" />
+  </ItemGroup>
+
+</Project>

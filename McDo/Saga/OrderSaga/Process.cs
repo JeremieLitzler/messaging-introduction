@@ -5,14 +5,14 @@ using Restaurant.Messages;
 
 namespace OrderSaga
 {
-	internal class OrderSaga :
+	public class Process :
 		Saga<OrderSagaData>,
 		IAmInitiatedBy<PlaceOrderCommand>,
 		IHandleMessages<MealReadyEvent>		
 	{
 		private IBus _bus;
 
-		public OrderSaga(IBus bus)
+		public Process(IBus bus)
 		{
 			_bus = bus;
 		}
@@ -65,7 +65,7 @@ namespace OrderSaga
 		}
 	}
 
-	internal class OrderSagaData : SagaData
+	public class OrderSagaData : SagaData
 	{
 		public string OrderId { get; set; }
 		// State is a dico tracking the meals readyness

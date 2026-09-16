@@ -23,17 +23,17 @@ var sagaDbConnectionString = config.GetConnectionString("OrderSagaDb")
 		"dotnet user-secrets set \"ConnectionStrings:OrderSagaDb\" \"<postgres connection string>\"");
 
 using var activator = new BuiltinHandlerActivator();
-activator.Register((bus, _) => new OrderSaga.OrderSaga(bus));
+activator.Register((bus, _) => new OrderSaga.Process(bus));
 
 var bus = Configure.With(activator)
 	.Transport(t => t.UseRabbitMq(rabbitMqConnectionString, "orders-saga"))
 	.Routing(r => r.TypeBased()
 		.Map<PrepareMealCommand>("restaurant")
 		.Map<DistributeOrderCommand>("restaurant"))
-	//.Sagas(s => s.StoreInPostgres(
+	//.Sagas(s => s.StoreInSqlServer(
 	//	sagaDbConnectionString,
-	//	"order-saga",
-	//	"order-saga-index")
+	//	"OrderSaga",
+	//	"OrderSagaIndex")
 	//)
 	.Sagas(s => s.UseFilesystem("D:\\Git\\GitHub\\messaging-introduction\\McDo\\Saga\\OrderSaga\\.saga-db"))
 	//.Sagas(s => s.StoreInMemory())
