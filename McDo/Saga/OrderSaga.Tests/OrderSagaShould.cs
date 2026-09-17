@@ -45,6 +45,12 @@ namespace OrderSaga.Tests
 
 			await saga.Handle(command);
 
+			// TODO voir custom assertions -> https://awesomeassertions.org/extensibility/
+			//saga.Should().HaveBatches(1)
+			//	.AndContains(mealName, 1)
+			//	.AndIsNotComplete()
+			//	;
+
 			await Assert.That(saga.Data.BatchesToPrepare.Count).IsEqualTo(1);
 			await Assert.That(saga.Data.BatchesToPrepare[mealName]).IsEqualTo(1);
 			await Assert.That(saga.Data.IsOrderComplete).IsFalse();
@@ -61,6 +67,7 @@ namespace OrderSaga.Tests
 			Process saga = ASaga();
 
 			await saga.Handle(command);
+
 			await SagaHandleMealReadyEvent(command.OrderId, saga);
 			await Assert.That(saga.Data.BatchesToPrepare.Count).IsEqualTo(1);
 			await Assert.That(saga.Data.BatchesToPrepare[mealName]).IsEqualTo(1);

@@ -22,8 +22,8 @@ namespace Restaurant.Handlers
 			// Set a random wait period to prepare meal
 			Random random = new Random();
 
-			await Task.Delay(random.Next(1000, 5000));
-			Console.WriteLine($"Prepared {message.MealName}");
+			Console.WriteLine($"Type enter to server {message.MealName}");
+			var _ = Console.ReadLine();
 
 			await _bus.Publish(new MealReadyEvent
 			{

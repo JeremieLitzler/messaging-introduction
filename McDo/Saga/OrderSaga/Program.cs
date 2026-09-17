@@ -29,7 +29,9 @@ var bus = Configure.With(activator)
 	.Transport(t => t.UseRabbitMq(rabbitMqConnectionString, "orders-saga"))
 	.Routing(r => r.TypeBased()
 		.Map<PrepareMealCommand>("restaurant")
-		.Map<DistributeOrderCommand>("restaurant"))
+		.Map<DistributeOrderCommand>("restaurant")
+		.Map<CancelOrderCommand>("orders-saga"))
+	.Timeouts( t => t.UseFileSystem("D:\\Git\\GitHub\\messaging-introduction\\McDo\\Saga\\OrderSaga\\.timeouts-db"))
 	//.Sagas(s => s.StoreInSqlServer(
 	//	sagaDbConnectionString,
 	//	"OrderSaga",

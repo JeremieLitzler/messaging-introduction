@@ -36,9 +36,9 @@ while (command != "quit")
 			OrderId = Guid.NewGuid().ToString(),
 			Items = new List<OrderItem>()
 			{
-				new OrderItem() { Quantity = 6, Name = "Burger"},
-				new OrderItem() { Quantity = 2, Name = "Frites"},
-				new OrderItem() { Quantity = 2, Name = "Coca"}
+				new OrderItem() { Quantity = 1, Name = "Burger"},
+				//new OrderItem() { Quantity = 2, Name = "Frites"},
+				//new OrderItem() { Quantity = 2, Name = "Coca"}
 			}
 		};
 		await bus.Send(order);
