@@ -60,3 +60,4 @@ nunit-*.xml
 *.user
 
 .saga-db
+.timeouts-db
