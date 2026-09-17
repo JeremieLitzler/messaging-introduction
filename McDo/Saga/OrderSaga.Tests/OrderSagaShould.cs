@@ -5,6 +5,7 @@ using Restaurant.Messages;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static OrderSaga.Tests.Builders.PlaceOrderCommandBuilder;
 
 namespace OrderSaga.Tests
 {
@@ -36,7 +37,7 @@ namespace OrderSaga.Tests
 		public async Task BeInAPendingStateAterReceivingAnOrder()
 		{
 			var mealName = "Pizza";
-			var command = PlaceOrderCommandBuilder.ACommand()
+			var command = ACommand()
 				.WithItem(mealName, 1)
 				.Build();
 
@@ -53,7 +54,7 @@ namespace OrderSaga.Tests
 		public async Task BeInAPendingStateWhenMultipleItemsAreOrderedAndNotAllAreReady()
 		{
 			var mealName = "Pizza";
-			var command = PlaceOrderCommandBuilder.ACommand()
+			var command = ACommand()
 				.WithItem(mealName, 2)
 				.Build();
 
@@ -96,7 +97,7 @@ namespace OrderSaga.Tests
 		[Test]
 		public async Task AskRestaurantToDistributeOrder()
 		{
-			var command = PlaceOrderCommandBuilder.ACommand()
+			var command = ACommand()
 				.WithItem("Pizza", 1)
 				.Build();
 			var saga = ASaga();
